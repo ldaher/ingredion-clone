@@ -65,13 +65,13 @@ public class BeanTelnetClient {
 			readUntil("Access OK");
 		} catch (IOException ex) {
 			ex.printStackTrace();
-		} finally {
+		} /*finally {
 			try {
 				br.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}
+		}*/
 	}
 
 	@SuppressWarnings("unused")
