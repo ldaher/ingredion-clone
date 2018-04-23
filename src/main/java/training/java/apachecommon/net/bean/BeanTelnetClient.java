@@ -82,15 +82,17 @@ public class BeanTelnetClient {
 			boolean found = false;
 			char ch = (char) this.in.read();
 	
+			System.out.print("Imprimindo letra por letra: " + ch);
+			
 			while (true) {
 				sb.append(ch);
 				if (ch == charAt && sb.toString().endsWith(pattern)) {
-					System.err.println("Lido: " + sb.toString());
+					System.err.println(ch + "\nLido: " + sb.toString());
 					return sb.toString();
 				}
 				
-//				((BufferedInputStream) this.in).
-	
+				System.out.print(ch);
+				
 				ch = (char) this.in.read();
 			}
 		} catch (Exception ex) {
