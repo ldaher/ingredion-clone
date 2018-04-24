@@ -31,47 +31,66 @@ public class BeanTelnetClient {
 	}
 
 	public void connect() {
-	
-		BufferedReader br = null;
-	
 		try {
-			br = new BufferedReader(new InputStreamReader(System.in));
-	
-			System.out.print("Endereço IP: ");
-			String server = br.readLine();
-	
-			if (server.equals("quit") || server.equals("exit")) {
-				System.exit(0);
+			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+			String server = "";
+			while (true) {
+				System.out.print("Endereço IP: ");
+				server = this.readLine(br);
+
+				if (!server.matches("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}")) {
+					System.err.println(
+							"Formato de \"Endereço IP\" incorreto (ex.: xxx.xxx.xxx.xxx (x = número inteiro)...");
+				} else {
+					break;
+				}
 			}
-	
-			System.out.print("Porta: ");
-			String porta = br.readLine();
-	
-			String usuario = "user admin";
-	
+
+			String porta = "";
+
+			while (true) {
+				System.out.print("Porta: ");
+				porta = this.readLine(br);
+
+				if (!porta.matches("\\d+")) {
+					System.err.println("Valor do item \"Porta\" necessita ser numérico...");
+				} else {
+					break;
+				}
+			}
+
+			System.out.print("Usúario (senha): ");
+			String usuario = this.readLine(br);
+
 			this.client.connect(server, Integer.parseInt(porta));
 			System.out.println("Connectado!");
-	
+
 			this.in = this.client.getInputStream();
 			this.out = new PrintStream(this.client.getOutputStream());
-	
+
 			System.out.println("Aguardando usuário...");
-	
+
 			readUntil("Ready for user");
 			write(usuario);
-	
+
 			System.out.println("esperando ok");
-	
+
 			readUntil("Access OK");
 		} catch (IOException ex) {
 			ex.printStackTrace();
-		} /*finally {
-			try {
-				br.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}*/
+		}
+	}
+
+	private String readLine(BufferedReader br) throws IOException {
+		String line = br.readLine();
+
+		if (line.matches("(quit|exit)")) {
+			System.out.println("Finalizando...");
+			System.exit(0);
+		}
+
+		return line;
 	}
 
 	@SuppressWarnings("unused")
@@ -81,18 +100,18 @@ public class BeanTelnetClient {
 			StringBuilder sb = new StringBuilder();
 			boolean found = false;
 			char ch = (char) this.in.read();
-	
+
 			System.out.print("Imprimindo letra por letra: " + ch);
-			
+
 			while (true) {
 				sb.append(ch);
 				if (ch == charAt && sb.toString().endsWith(pattern)) {
 					System.err.println(ch + "\nLido: " + sb.toString());
 					return sb.toString();
 				}
-				
+
 				System.out.print(ch);
-				
+
 				ch = (char) this.in.read();
 			}
 		} catch (Exception ex) {
