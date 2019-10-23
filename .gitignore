@@ -25,3 +25,8 @@ hs_err_pid*
 # Maven "target" folder and subdirectories
 target/
 target/**
+
+# IDE and other tools specific files
+.project
+.classpath
+.springBeans
