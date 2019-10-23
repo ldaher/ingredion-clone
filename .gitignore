@@ -27,8 +27,8 @@ target/
 target/**
 
 # IDE and other tools specific files
-settings/
-settings/**
+.settings/
+.settings/**
 .project
 .classpath
 .springBeans
