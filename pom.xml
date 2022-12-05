@@ -6,7 +6,7 @@
 	<artifactId>apache-commons-net</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<properties>
-		<commonsnet.version>1.4.1</commonsnet.version>
+		<commonsnet.version>3.9.0</commonsnet.version>
 		<spring.version>3.1.4.RELEASE</spring.version>
 	</properties>
 	<dependencies>
